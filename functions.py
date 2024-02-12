@@ -36,47 +36,12 @@ def shift_gamma_lhp_loss_cdf(x, a, cor, pd):
     return y
 
 
-#  Shifted gamma Large Homogenous Portfolio Loss PDF
-def shift_gamma_lhp_loss_pdf(x, a, cor, p):
-    p1 = shift_gamma_pdf(
-        shift_gamma_ppf(p, a, 1) - shift_gamma_ppf(x, a, 1 - cor), a, cor
-    )
-    p2 = shift_gamma_pdf(shift_gamma_ppf(x, a, 1 - cor), a, 1 - cor)
-    return p1 / p2
-
-
-#  Shifted gamma Large Homogenous Portfolio Loss inverse CDF
-def shift_gamma_lhp_loss_ppf(y, a, cor, p):
-    return 1 - shift_gamma_lhp_loss_cdf(1 - y, a, 1 - cor, p)
-
-
 #  Shifted gamma Tranched Large Homogenous Portfolio Loss CDF
 def shift_gamma_lhp_tloss_cdf(x, a, cor, pd, k1, k2):
     p1 = shift_gamma_lhp_loss_cdf(x * k2 + (1 - x) * k1, a, cor, pd)
     p2 = shift_gamma_lhp_loss_cdf(k2, a, cor, pd)
     y = p1 + (x == 1) * (1 - p2)
     return y
-
-#  Shifted gamma Tranched Large Homogenous Portfolio Loss PDF
-def shift_gamma_lhp_tloss_pdf(x, a, cor, p, k1, k2):
-    p1 = (x == 0) * shift_gamma_lhp_loss_cdf(k1, a, cor, p)
-    p2 = (
-        (k2 - k1)
-        * shift_gamma_lhp_loss_cdf(x * k2 + (1 - x) * k1, a, cor, p)
-        * (
-            shift_gamma_lhp_loss_cdf(k2, a, cor, p)
-            - shift_gamma_lhp_loss_cdf(k1, a, cor, p)
-        )
-    )
-    p3 = (x == 1) * (1 - shift_gamma_lhp_loss_cdf(k2, a, cor, p))
-    return p1 + p2 + p3
-
-
-#  Shifted gamma Tranched Large Homogenous Portfolio Loss Inverse CDF
-def shift_gamma_lhp_tloss_ppf(y, a, cor, p, k1, k2):
-    quantile = shift_gamma_lhp_loss_ppf(y, a, cor, p)
-    return np.minimum(np.maximum(quantile - k1, 0), k2 - k1) / (k2 - k1)
-
 
 #  Shifted gamma conditional PD
 def cond_pd_sg(syst_factor, a, pd, cor):
