@@ -1,2 +1,6 @@
 # ETL_estimation
 Methodology for estimating ETL within a One-Factor Model for correlated defaults.
+This repository showcases the control variate variance reduction methodology for estimating expected tranche loss in a One-Factor Levy threshold model. The repository consists of two main files. 
+
+  --> functions.py consists of all the core functionality for the methodology. 
+  --> output_analysis.ipynb calls the functions in functions.py to generate ETL data and display plots.  
