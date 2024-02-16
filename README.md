@@ -4,3 +4,4 @@ This repository showcases the control variate variance reduction methodology for
 
   --> functions.py consists of all the core functionality for the methodology. 
   --> output_analysis.ipynb calls the functions in functions.py to generate ETL data and display plots.  
+  --> MSc_Thesis.pdf presents the variance reduction technique rigorously
